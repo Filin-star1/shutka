@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<title>Шутка</title>
+<style>
+  body { font-family: sans-serif; margin: 20px; background:#f4f4f4; }
+  #bar { position: sticky; top: 0; background:#f4f4f4; padding: 10px 0; z-index: 10; }
+  button { padding: 12px 18px; font-size: 16px; margin-right: 8px; cursor: pointer; }
+  #stop { background:#c62828; color:#fff; border:none; border-radius:6px; }
+  #area { margin-top: 16px; display:flex; flex-wrap:wrap; gap:8px; }
+  .doc {
+    width:160px; height:100px; border:1px solid #999; background:#fff;
+    box-shadow:2px 2px 6px #0003; padding:8px; font-size:12px;
+    overflow:hidden; box-sizing:border-box;
+  }
+</style>
+
+<div id="bar">
+  <button id="stop">СТОП</button>
+  <span id="count">Открыто: 0</span>
+</div>
+<div id="area"></div>
+
+<script>
+  const names = [
+    "Срочный документ.txt",
+    "Отчёт_финал_точно_финал.docx",
+    "Не открывать.txt",
+    "важно_прочитать.txt",
+    "договор_копия_копия.pdf",
+    "список_дел.txt"
+  ];
+  const area = document.getElementById("area");
+  const countEl = document.getElementById("count");
+  let timer = null;
+  let count = 0;
+
+  function tick() {
+    const d = document.createElement("div");
+    d.className = "doc";
+    d.textContent = names[Math.floor(Math.random() * names.length)];
+    area.appendChild(d);
+    count++;
+    countEl.textContent = "Открыто: " + count;
+  }
+
+  // Автостарт при переходе по ссылке
+  timer = setInterval(tick, 150);
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  document.getElementById("stop").addEventListener("click", stop);
+  window.addEventListener("keydown", e => {
+    if (e.key === "Escape") stop();
+  });
+</script>
+</html>
